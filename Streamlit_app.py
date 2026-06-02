@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from analyzers.dtype_analyzer import analyze_dtypes
 from analyzers.null_analyzer import null_analyzer
+from analyzers.duplicate_analyzer import duplicate_analyzer
 
 st.set_page_config(page_title="Agentic EDA System", layout="wide")
 
@@ -44,3 +45,7 @@ if uploaded_file is not None:
     nullval_df = null_analyzer(df)
     st.subheader("Null Value Analysis")
     st.dataframe(nullval_df)
+
+    dupe_df = duplicate_analyzer(df)
+    st.subheader("Duplicate Analysis")
+    st.dataframe(dupe_df)
