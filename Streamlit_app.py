@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from analyzers.dtype_analyzer import analyze_dtypes
+from analyzers.null_analyzer import null_analyzer
 
 st.set_page_config(page_title="Agentic EDA System", layout="wide")
 
@@ -39,3 +40,7 @@ if uploaded_file is not None:
     dtype_df = analyze_dtypes(df)
     st.subheader("Datatype Analysis")
     st.dataframe(dtype_df)
+
+    nullval_df = null_analyzer(df)
+    st.subheader("Null Value Analysis")
+    st.dataframe(nullval_df)
