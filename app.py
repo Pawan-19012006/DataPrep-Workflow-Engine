@@ -4,6 +4,7 @@ from analyzers.dtype_analyzer import analyze_dtypes
 from analyzers.null_analyzer import null_analyzer
 from analyzers.duplicate_analyzer import duplicate_analyzer
 from visualizations.histogram import histogram_plot
+from visualizations.heatmap import heatmap_plot
 
 st.set_page_config(page_title="Agentic EDA System", layout="wide")
 
@@ -51,6 +52,7 @@ if uploaded_file is not None:
     st.subheader("Duplicate Analysis")
     st.dataframe(dupe_df)
 
+    st.subheader("Histogram Plotting")
     numeric_cols = df.select_dtypes(include="number").columns
     selected_column = st.selectbox(
     "Select Column",
@@ -58,3 +60,24 @@ if uploaded_file is not None:
 )
     fig = histogram_plot(df, selected_column)
     st.pyplot(fig)
+
+    st.subheader("Correlation Heatmap")
+
+    numeric_cols = df.select_dtypes(include="number").columns
+
+    selected_heatmap_cols = st.multiselect(
+        "Select Columns for Heatmap",
+        numeric_cols
+    )
+
+    if len(selected_heatmap_cols) >= 2:
+
+        heatmap_fig = heatmap_plot(
+            df,
+            selected_heatmap_cols
+        )
+
+        st.pyplot(heatmap_fig)
+
+    else:
+        st.warning("Please select at least 2 columns.")
