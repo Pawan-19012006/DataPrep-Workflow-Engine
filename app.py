@@ -3,6 +3,7 @@ import pandas as pd
 from analyzers.dtype_analyzer import analyze_dtypes
 from analyzers.null_analyzer import null_analyzer
 from analyzers.duplicate_analyzer import duplicate_analyzer
+from visualizations.histogram import histogram_plot
 
 st.set_page_config(page_title="Agentic EDA System", layout="wide")
 
@@ -49,3 +50,11 @@ if uploaded_file is not None:
     dupe_df = duplicate_analyzer(df)
     st.subheader("Duplicate Analysis")
     st.dataframe(dupe_df)
+
+    numeric_cols = df.select_dtypes(include="number").columns
+    selected_column = st.selectbox(
+    "Select Column",
+    numeric_cols
+)
+    fig = histogram_plot(df, selected_column)
+    st.pyplot(fig)
