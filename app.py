@@ -39,31 +39,42 @@ if uploaded_file is not None:
 
     with col2:
         st.metric("Columns", df.shape[1]) 
-
+    
+    #Datatype analysis
     dtype_df = analyze_dtypes(df)
     st.subheader("Datatype Analysis")
     st.dataframe(dtype_df)
-
+    
+    #Null value finding
     nullval_df = null_analyzer(df)
     st.subheader("Null Value Analysis")
     st.dataframe(nullval_df)
 
+    #Duplicates finding
     dupe_df = duplicate_analyzer(df)
     st.subheader("Duplicate Analysis")
     st.dataframe(dupe_df)
 
+col1, col2 = st.columns(2)
+
+# ---------------- HISTOGRAM ----------------
+with col1:
     st.subheader("Histogram Plotting")
+
     numeric_cols = df.select_dtypes(include="number").columns
+
     selected_column = st.selectbox(
-    "Select Column",
-    numeric_cols
-)
+        "Select Column",
+        numeric_cols
+    )
+
     fig = histogram_plot(df, selected_column)
+
     st.pyplot(fig)
 
+# ---------------- HEATMAP ----------------
+with col2:
     st.subheader("Correlation Heatmap")
-
-    numeric_cols = df.select_dtypes(include="number").columns
 
     selected_heatmap_cols = st.multiselect(
         "Select Columns for Heatmap",
