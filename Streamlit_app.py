@@ -24,7 +24,7 @@ if uploaded_file is not None:
 
     # Store globally in session
     st.session_state["original_df"] = df
-    
+
     #Resets the working df
     st.session_state["working_df"] = df.copy()
 
@@ -34,3 +34,7 @@ if uploaded_file is not None:
         "Use the sidebar to navigate "
         "to Analysis or Transformations."
     )
+
+if "history" not in st.session_state:
+
+    st.session_state["history"] = []

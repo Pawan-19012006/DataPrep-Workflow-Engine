@@ -11,14 +11,14 @@ def handle_missing_values(df,columns,method):
             )
     
     #Median imputation
-    if method == "median":
+    elif method == "median":
         for col in columns:
             working_df[col] = working_df[col].fillna(
                 working_df[col].median()
             )
     
     #Mode imputation
-    if method == "mode":
+    elif method == "mode":
         for col in columns:
             working_df[col] = working_df[col].fillna(
                 working_df[col].mode()[0]
@@ -31,3 +31,4 @@ def handle_missing_values(df,columns,method):
         )
 
     return working_df
+

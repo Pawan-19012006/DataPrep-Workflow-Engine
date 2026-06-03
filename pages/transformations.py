@@ -20,6 +20,9 @@ if "working_df" not in st.session_state:
         st.session_state["original_df"].copy()
     )
 
+if "history" not in st.session_state:
+    st.session_state["history"] = []
+
 working_df = st.session_state["working_df"]
 
 st.title("Data Transformations")
@@ -91,6 +94,26 @@ with st.expander("Missing Value Handling"):
             "working_df"
         ] = transformed_df
 
+        history_message = {
+
+            "mean":
+            f"Applied Mean Imputation on {selected_columns}",
+
+            "median":
+            f"Applied Median Imputation on {selected_columns}",
+
+            "mode":
+            f"Applied Mode Imputation on {selected_columns}",
+
+            "drop_rows":
+            f"Dropped Rows with Missing Values in {selected_columns}"
+
+         }
+
+        st.session_state["history"].append(
+            history_message[selected_method]
+        )
+
         st.success(
             "Missing Value Handling Applied!"
         )
@@ -118,6 +141,10 @@ with st.expander("Duplicate Removal"):
         st.session_state[
             "working_df"
         ]=working_df
+
+        st.session_state["history"].append(
+            "Removed Duplicate Rows"
+        )
 
         st.success(
             "Duplicate Rows Removed!"
@@ -161,6 +188,10 @@ with st.expander("Outlier Handling"):
         st.session_state[
             "working_df"
         ] = transformed_df
+
+        st.session_state["history"].append(
+            f"Removed Outliers using IQR on {selected_outlier_cols}"
+        )
 
         st.success(
             "Outliers Removed Successfully!"
@@ -215,6 +246,20 @@ with st.expander("Feature Scaling"):
             "working_df"
         ] = transformed_df
 
+        history_message = {
+
+            "minmax":
+            f"Applied MinMax Scaling on {selected_scale_cols}",
+
+            "standard":
+            f"Applied Standard Scaling on {selected_scale_cols}"
+
+        }
+
+        st.session_state["history"].append(
+            history_message[scaling_method]
+        )
+
         st.success(
             "Feature Scaling Applied!"
         )
@@ -268,6 +313,20 @@ with st.expander("Feature Encoding"):
             "working_df"
         ] = transformed_df
 
+        history_message = {
+
+            "label":
+            f"Applied Label Encoding on {selected_encode_cols}",
+
+            "onehot":
+            f"Applied One-Hot Encoding on {selected_encode_cols}"
+
+        }
+
+        st.session_state["history"].append(
+            history_message[encoding_method]
+        )
+
         st.success(
             "Encoding Applied Successfully!"
         )
@@ -280,6 +339,18 @@ with st.expander("Feature Encoding"):
             transformed_df.head()
         )
 
+#History
+st.subheader("Transformation History")
+
+if st.session_state["history"]:
+
+    for step in st.session_state["history"]:
+
+        st.write(f"✓ {step}")
+
+else:
+
+    st.info("No transformations applied yet.")
 
 #CSV export
 st.subheader("Export Cleaned Dataset")
@@ -317,6 +388,7 @@ if st.button("Reset All Transformations"):
     st.session_state["working_df"] = (
         st.session_state["original_df"].copy()
     )
+    st.session_state["history"] = []
 
     st.success(
         "Pipeline Reset Successfully!"
