@@ -22,19 +22,26 @@ st.title("Data Transformations")
 
 # Missing Value Handling
 with st.expander("Missing Value Handling"):
+
     st.subheader("Handle Missing Values")
 
-    #Numerical cols only
+    # Numerical columns
     numeric_cols = [
-        col for col in df.select_dtypes(include="number").columns
+        col for col in df.select_dtypes(
+            include="number"
+        ).columns
         if "Unnamed" not in col
     ]
 
-    selected_columns = st.multiselect(
-        "Selected Columns",
-        numeric_cols
-    )
+    # Categorical columns
+    categorical_cols = [
+        col for col in df.select_dtypes(
+            exclude="number"
+        ).columns
+        if "Unnamed" not in col
+    ]
 
+    # Method selection
     selected_method = st.selectbox(
         "Select Imputation Method",
         [
@@ -45,31 +52,52 @@ with st.expander("Missing Value Handling"):
         ]
     )
 
+    # Dynamic column selection
+    if selected_method in ["mean", "median"]:
+
+        selectable_cols = numeric_cols
+
+    else:
+
+        selectable_cols = (
+            numeric_cols + categorical_cols
+        )
+
+    # Column selection
+    selected_columns = st.multiselect(
+        "Select Columns",
+        selectable_cols
+    )
+
+    # Apply button
     apply_missing = st.button(
         "Apply Missing Value Handling"
     )
 
     if apply_missing:
+
         transformed_df = handle_missing_values(
             working_df,
             selected_columns,
             selected_method
         )
 
+        # Update session state
+        st.session_state[
+            "working_df"
+        ] = transformed_df
+
         st.success(
             "Missing Value Handling Applied!"
         )
 
-        st.subheader("Transformed Dataset Preview")
+        st.subheader(
+            "Transformed Dataset Preview"
+        )
 
         st.dataframe(
             transformed_df.head()
         )
-
-        # Session state allows sequential processing of each stage by temporarily storing the dataframe and to give it to the next process 
-        st.session_state[
-            "working_df"
-        ] = transformed_df
 
 # Duplicate Removal
 with st.expander("Duplicate Removal"):
@@ -99,15 +127,16 @@ with st.expander("Duplicate Removal"):
         )
 
 #CSV export
-if "working_df" in st.session_state:
+st.subheader("Export Cleaned Dataset")
 
-    csv_data = st.session_state[
-        "working_df"
-    ].to_csv(index=False)
+csv_data = st.session_state[
+    "working_df"
+].to_csv(index=False)
 
-    st.download_button(
-        label="Download Cleaned CSV",
-        data=csv_data,
-        file_name="cleaned_dataset.csv",
-        mime="text/csv"
-    )
+st.download_button(
+    label="Download Final Cleaned CSV",
+    data=csv_data,
+    file_name="cleaned_dataset.csv",
+    mime="text/csv",
+    key="final_csv_download"
+)
