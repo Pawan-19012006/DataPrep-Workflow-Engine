@@ -3,6 +3,7 @@ from analyzers.dtype_analyzer import analyze_dtypes
 from analyzers.null_analyzer import null_analyzer
 from analyzers.duplicate_analyzer import duplicate_analyzer
 from analyzers.outlier_analyzer import outlier_analyzer
+from analyzers.unique_analyzer import unique_analyzer
 
 from visualizations.histogram import histogram_plot
 from visualizations.heatmap import heatmap_plot
@@ -50,6 +51,11 @@ st.dataframe(dupe_df)
 outlier_df = outlier_analyzer(df)
 st.subheader("Outlier Analysis")
 st.dataframe(outlier_df)
+
+# Unique Value Analysis
+unique_df = unique_analyzer(df)
+st.subheader("Unique Value Analysis")
+st.dataframe(unique_df)
 
 col1, col2 = st.columns(2)
 
