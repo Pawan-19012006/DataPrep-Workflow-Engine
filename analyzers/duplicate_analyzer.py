@@ -2,9 +2,11 @@ import pandas as pd
 
 def duplicate_analyzer(df):
 
-    duplicate_counts = df.apply(lambda col: col.duplicated().sum())
-    df_dupes = pd.DataFrame({
-        "Columns" : duplicate_counts.index,
-        "Duplicates" : duplicate_counts.values
+    duplicate_count = df.duplicated().sum()
+
+    duplicate_df = pd.DataFrame({
+        "Metric": ["Duplicate Rows"],
+        "Count": [duplicate_count]
     })
-    return df_dupes
+
+    return duplicate_df

@@ -24,6 +24,9 @@ if uploaded_file is not None:
 
     # Store globally in session
     st.session_state["original_df"] = df
+    
+    #Resets the working df
+    st.session_state["working_df"] = df.copy()
 
     st.success("File Uploaded Successfully!")
 
