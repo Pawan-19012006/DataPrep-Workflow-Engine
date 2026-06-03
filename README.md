@@ -1,8 +1,21 @@
+<div align="center">
+
 # DataPrep Workflow Engine
 
-An interactive, stateful data preparation and preprocessing workflow system built using Streamlit. The application enables users to perform Exploratory Data Analysis (EDA), sequential data transformations, and export cleaned datasets for Machine Learning workflows — all through an intuitive multi-page interface.
-
 ---
+
+## Analyze • Transform • Export
+
+<br>
+
+![Python](https://img.shields.io/badge/Python-3.13.2-blue?style=for-the-badge)
+![Streamlit](https://img.shields.io/badge/Framework-Streamlit-red?style=for-the-badge)
+![Pandas](https://img.shields.io/badge/Data-Pandas-green?style=for-the-badge)
+![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-orange?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-Web-purple?style=for-the-badge)
+![Architecture](https://img.shields.io/badge/Architecture-Stateful%20Pipeline-gray?style=for-the-badge)
+
+</div>
 
 # Project Overview
 
