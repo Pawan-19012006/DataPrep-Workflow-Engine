@@ -2,6 +2,7 @@ import streamlit as st
 from analyzers.dtype_analyzer import analyze_dtypes
 from analyzers.null_analyzer import null_analyzer
 from analyzers.duplicate_analyzer import duplicate_analyzer
+from analyzers.outlier_analyzer import outlier_analyzer
 
 from visualizations.histogram import histogram_plot
 from visualizations.heatmap import heatmap_plot
@@ -44,6 +45,11 @@ st.dataframe(nullval_df)
 dupe_df = duplicate_analyzer(df)
 st.subheader("Duplicate Analysis")
 st.dataframe(dupe_df)
+
+# Outlier Analysis
+outlier_df = outlier_analyzer(df)
+st.subheader("Outlier Analysis")
+st.dataframe(outlier_df)
 
 col1, col2 = st.columns(2)
 

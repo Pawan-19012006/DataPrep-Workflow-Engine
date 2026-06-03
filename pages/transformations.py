@@ -1,6 +1,7 @@
 import streamlit as st
 from transformers.missing_handler import handle_missing_values
 from transformers.duplicate_handler import remove_duplicates
+from transformers.outlier_handler import remove_outliers_iqr
 
 if "original_df" not in st.session_state:
 
@@ -124,6 +125,52 @@ with st.expander("Duplicate Removal"):
         )
         st.dataframe(
             working_df.head()
+        )
+
+# Outlier Removal
+
+# Outlier Handling
+with st.expander("Outlier Handling"):
+
+    st.subheader("Remove Outliers (IQR Method)")
+
+    numeric_cols = [
+        col for col in working_df.select_dtypes(
+            include="number"
+        ).columns
+        if "Unnamed" not in col
+    ]
+
+    selected_outlier_cols = st.multiselect(
+        "Select Columns for Outlier Removal",
+        numeric_cols
+    )
+
+    apply_outliers = st.button(
+        "Apply Outlier Removal"
+    )
+
+    if apply_outliers:
+
+        transformed_df = remove_outliers_iqr(
+            st.session_state["working_df"],
+            selected_outlier_cols
+        )
+
+        st.session_state[
+            "working_df"
+        ] = transformed_df
+
+        st.success(
+            "Outliers Removed Successfully!"
+        )
+
+        st.subheader(
+            "Updated Dataset Preview"
+        )
+
+        st.dataframe(
+            transformed_df.head()
         )
 
 #CSV export
