@@ -17,6 +17,8 @@
 
 </div>
 
+![Home Page](images/dashboard.png)
+
 # Project Overview
 
 Real-world datasets are often messy, inconsistent, and not directly suitable for machine learning or analytical workflows. Data scientists and analysts typically spend significant time performing repetitive preprocessing tasks such as:
@@ -63,13 +65,7 @@ This project addresses these limitations through:
 
 ---
 
-# Dashboard Preview
-
-## Home Page
-
-![Home Page](images/dashboard.png)
-
----
+# Preview
 
 ## Analysis Page Preview
 
