@@ -2,11 +2,11 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(
-    page_title="Agentic EDA System",
+    page_title="DataPrep Workflow Engine",
     layout="wide"
 )
 
-st.title("Agentic EDA + Data Cleaning System")
+st.title("DataPrep Workflow Engine")
 
 uploaded_file = st.file_uploader(
     "Upload CSV or Excel File",
