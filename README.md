@@ -71,13 +71,13 @@ This project addresses these limitations through:
 
 ---
 
-# Analysis Page Preview
+## Analysis Page Preview
 
 ![Analysis Page](images/analysis-page.png)
 
 ---
 
-# Transformation Page Preview
+## Transformation Page Preview
 
 
 ![Transformation Page](images/transformations-page.png)
