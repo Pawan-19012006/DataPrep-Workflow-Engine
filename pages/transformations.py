@@ -1,7 +1,10 @@
 import streamlit as st
+import io
 from transformers.missing_handler import handle_missing_values
 from transformers.duplicate_handler import remove_duplicates
 from transformers.outlier_handler import remove_outliers_iqr
+from transformers.scaler import scale_features
+from transformers.encoder import encode_features
 
 if "original_df" not in st.session_state:
 
@@ -127,8 +130,6 @@ with st.expander("Duplicate Removal"):
             working_df.head()
         )
 
-# Outlier Removal
-
 # Outlier Handling
 with st.expander("Outlier Handling"):
 
@@ -173,6 +174,113 @@ with st.expander("Outlier Handling"):
             transformed_df.head()
         )
 
+# Feature Scaling
+with st.expander("Feature Scaling"):
+
+    st.subheader("Scale Numerical Features")
+
+    numeric_cols = [
+        col for col in working_df.select_dtypes(
+            include="number"
+        ).columns
+        if "Unnamed" not in col
+    ]
+
+    selected_scale_cols = st.multiselect(
+        "Select Columns for Scaling",
+        numeric_cols
+    )
+
+    scaling_method = st.selectbox(
+        "Select Scaling Method",
+        [
+            "minmax",
+            "standard"
+        ]
+    )
+
+    apply_scaling = st.button(
+        "Apply Feature Scaling"
+    )
+
+    if apply_scaling:
+
+        transformed_df = scale_features(
+            st.session_state["working_df"],
+            selected_scale_cols,
+            scaling_method
+        )
+
+        st.session_state[
+            "working_df"
+        ] = transformed_df
+
+        st.success(
+            "Feature Scaling Applied!"
+        )
+
+        st.subheader(
+            "Updated Dataset Preview"
+        )
+
+        st.dataframe(
+            transformed_df.head()
+        )
+
+# Feature Encoding
+with st.expander("Feature Encoding"):
+
+    st.subheader("Encode Categorical Features")
+
+    categorical_cols = [
+        col for col in working_df.select_dtypes(
+            exclude="number"
+        ).columns
+        if "Unnamed" not in col
+    ]
+
+    selected_encode_cols = st.multiselect(
+        "Select Columns for Encoding",
+        categorical_cols
+    )
+
+    encoding_method = st.selectbox(
+        "Select Encoding Method",
+        [
+            "label",
+            "onehot"
+        ]
+    )
+
+    apply_encoding = st.button(
+        "Apply Encoding"
+    )
+
+    if apply_encoding:
+
+        transformed_df = encode_features(
+            st.session_state["working_df"],
+            selected_encode_cols,
+            encoding_method
+        )
+
+        st.session_state[
+            "working_df"
+        ] = transformed_df
+
+        st.success(
+            "Encoding Applied Successfully!"
+        )
+
+        st.subheader(
+            "Updated Dataset Preview"
+        )
+
+        st.dataframe(
+            transformed_df.head()
+        )
+
+
 #CSV export
 st.subheader("Export Cleaned Dataset")
 
@@ -187,3 +295,29 @@ st.download_button(
     mime="text/csv",
     key="final_csv_download"
 )
+
+buffer = io.BytesIO()
+
+st.session_state["working_df"].to_excel(
+    buffer,
+    index=False,
+    engine="openpyxl"
+)
+
+st.download_button(
+    label="Download Final Cleaned Excel",
+    data=buffer,
+    file_name="cleaned_dataset.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    key="excel_download"
+)
+
+if st.button("Reset All Transformations"):
+
+    st.session_state["working_df"] = (
+        st.session_state["original_df"].copy()
+    )
+
+    st.success(
+        "Pipeline Reset Successfully!"
+    )
