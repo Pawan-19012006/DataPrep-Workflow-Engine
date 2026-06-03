@@ -55,40 +55,45 @@ if uploaded_file is not None:
     st.subheader("Duplicate Analysis")
     st.dataframe(dupe_df)
 
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-# ---------------- HISTOGRAM ----------------
-with col1:
-    st.subheader("Histogram Plotting")
+    # ---------------- HISTOGRAM ----------------
+    with col1:
+        st.subheader("Histogram Plotting")
 
-    numeric_cols = df.select_dtypes(include="number").columns
+        numeric_cols = [
+        col for col in df.select_dtypes(include="number").columns
+        if "Unnamed" not in col
+    ]
 
-    selected_column = st.selectbox(
-        "Select Column",
-        numeric_cols
-    )
-
-    fig = histogram_plot(df, selected_column)
-
-    st.pyplot(fig)
-
-# ---------------- HEATMAP ----------------
-with col2:
-    st.subheader("Correlation Heatmap")
-
-    selected_heatmap_cols = st.multiselect(
-        "Select Columns for Heatmap",
-        numeric_cols
-    )
-
-    if len(selected_heatmap_cols) >= 2:
-
-        heatmap_fig = heatmap_plot(
-            df,
-            selected_heatmap_cols
+        selected_column = st.selectbox(
+            "Select Column",
+            ["Select a column"] + list(numeric_cols)
         )
 
-        st.pyplot(heatmap_fig)
+        if selected_column != "Select a column":
 
-    else:
-        st.warning("Please select at least 2 columns.")
+            fig = histogram_plot(df, selected_column)
+
+            st.pyplot(fig)
+
+    # ---------------- HEATMAP ----------------
+    with col2:
+        st.subheader("Correlation Heatmap")
+
+        selected_heatmap_cols = st.multiselect(
+            "Select Columns for Heatmap",
+            numeric_cols
+        )
+
+        if len(selected_heatmap_cols) >= 2:
+
+            heatmap_fig = heatmap_plot(
+                df,
+                selected_heatmap_cols
+            )
+
+            st.pyplot(heatmap_fig)
+
+        else:
+            st.warning("Please select at least 2 columns.")
