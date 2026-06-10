@@ -120,7 +120,7 @@ The application is divided into separate workflow-focused pages:
 
 ---
 
-# Analysis Page Features
+# Data Analysis Features
 
 The **Data Analysis** module provides interactive exploratory data analysis capabilities.
 
@@ -165,7 +165,7 @@ The **Data Analysis** module provides interactive exploratory data analysis capa
 
 ---
 
-# Transformation Page Features
+# Data Transformation Features
 
 The **Data Transformations** module enables sequential preprocessing workflows.
 
