@@ -19,6 +19,24 @@
 
 ![Home Page](images/dashboard.png)
 
+---
+
+# Table of Contents
+
+- [Project Overview](#project-overview)
+- [Problem Statement](#problem-statement)
+- [Workflow Pipeline](#workflow-pipeline)
+- [Key Features](#key-features)
+- [Analysis Page Features](#analysis-page-features)
+- [Transformation Page Features](#transformation-page-features)
+- [System Architecture](#system-architecture)
+- [Tech Stack](#tech-stack)
+- [Engineering Concepts Implemented](#engineering-concepts-implemented)
+- [Future Improvements](#future-improvements)
+- [Conclusion](#conclusion)
+
+---
+
 # Project Overview
 
 Real-world datasets are often messy, inconsistent, and not directly suitable for machine learning or analytical workflows. Data scientists and analysts typically spend significant time performing repetitive preprocessing tasks such as:
@@ -65,25 +83,15 @@ This project addresses these limitations through:
 
 ---
 
-# Preview
+# Workflow Pipeline
 
-## Analysis Page Preview
-
-![Analysis Page](images/analysis-page.png)
-
----
-
-## Transformation Page Preview
-
-
-![Transformation Page](images/transformations-page.png)
-
+![Workflow](images/dataprep_workflow.png)
 
 ---
 
 # Key Features
 
-## Stateful Sequential Transformation Pipeline
+## I) Stateful Sequential Transformation Pipeline
 
 The application maintains two separate datasets throughout the workflow:
 
@@ -100,9 +108,7 @@ The application maintains two separate datasets throughout the workflow:
 
 This architecture enables true sequential preprocessing workflows.
 
----
-
-# Multi-Page Application Architecture
+## II) Multi-Page Application Architecture
 
 The application is divided into separate workflow-focused pages:
 
@@ -118,40 +124,42 @@ The application is divided into separate workflow-focused pages:
 
 The **Data Analysis** module provides interactive exploratory data analysis capabilities.
 
-## Dataset Preview
+![Analysis Page](images/analysis-page.png)
+
+## I) Dataset Preview
 - Displays dataset head
 - Provides quick overview of uploaded data
 
-## Dataset Shape Metrics
+## II) Dataset Shape Metrics
 - Total rows
 - Total columns
 
-## Datatype Analysis
+## III) Datatype Analysis
 - Detects column datatypes
 - Helps identify categorical and numerical features
 
-## Null Value Analysis
+## IV) Null Value Analysis
 - Displays missing value counts per column
 - Helps identify incomplete features
 
-## Duplicate Analysis
+## V) Duplicate Analysis
 - Detects exact duplicate rows
 - Helps identify redundant records
 
-## Unique Value Analysis
+## VI) Unique Value Analysis
 - Displays unique feature counts
 - Shows cardinality levels
 - Helps guide encoding decisions
 
-## Outlier Analysis
+## VII) Outlier Analysis
 - Uses IQR-based outlier detection
 - Detects numerical anomalies
 
-## Histogram Visualization
+## VIII) Histogram Visualization
 - Interactive histogram plotting
 - Numerical feature distribution analysis
 
-## Correlation Heatmap
+## IX) Correlation Heatmap
 - Multi-column correlation analysis
 - Dynamic heatmap visualization
 
@@ -161,7 +169,9 @@ The **Data Analysis** module provides interactive exploratory data analysis capa
 
 The **Data Transformations** module enables sequential preprocessing workflows.
 
-## Missing Value Handling
+![Transformation Page](images/transformations-page.png)
+
+## I) Missing Value Handling
 
 Supported strategies:
 
@@ -170,16 +180,12 @@ Supported strategies:
 - Mode Imputation
 - Row Deletion
 
----
-
-## Duplicate Removal
+## II) Duplicate Removal
 
 - Removes exact duplicate rows
 - Maintains dataset consistency
 
----
-
-## Outlier Removal
+## III) Outlier Removal
 
 Uses:
 
@@ -189,9 +195,7 @@ Features:
 - Column-wise outlier removal
 - Numerical feature filtering
 
----
-
-## Feature Scaling
+## IV) Feature Scaling
 
 Supported scaling methods:
 
@@ -202,9 +206,7 @@ Implemented using:
 
 - `scikit-learn.preprocessing`
 
----
-
-## Feature Encoding
+## V) Feature Encoding
 
 Supported encoding methods:
 
@@ -216,9 +218,7 @@ Features:
 - Integer-based encoded outputs
 - Dynamic feature expansion
 
----
-
-## Transformation History
+## VI) Transformation History
 
 Tracks all preprocessing steps applied during the session.
 
@@ -233,15 +233,11 @@ Example:
 
 This provides workflow transparency and preprocessing traceability.
 
----
-
-## Reset Pipeline
+## VII) Reset Pipeline
 
 Allows users to reset all transformations and restore the original uploaded dataset.
 
----
-
-## Export System
+## VIII) Export System
 
 Supported export formats:
 
@@ -254,7 +250,10 @@ Users can download the fully cleaned and transformed dataset after preprocessing
 
 # System Architecture
 
+![Architecture](images/dataprep_system_arch.png)
+
 The project follows a modular architecture for scalability and maintainability.
+
 
 ```text
 data-prep-workflow-engine/
