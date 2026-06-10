@@ -346,3 +346,5 @@ The project emphasizes:
 rather than focusing solely on static visualizations.
 
 This architecture makes the system scalable, reusable, and extensible for future machine learning workflow enhancements.
+
+# ⭐ If you found this project interesting, feel free to star the repository!
